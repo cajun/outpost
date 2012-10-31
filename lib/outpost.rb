@@ -1,5 +1,6 @@
 require "outpost/version"
 require "outpost/board"
+require "outpost/board/squares"
 require "outpost/square"
 require "outpost/piece"
 require "outpost/piece/pawn"
