@@ -1,0 +1,2 @@
+class Outpost::Game
+end

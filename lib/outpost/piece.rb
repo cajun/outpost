@@ -1,0 +1,2 @@
+module Outpost::Piece
+end
