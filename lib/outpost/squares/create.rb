@@ -4,9 +4,9 @@ module Outpost::Squares::Create
   #
   # @returns [[Outpost::Square]] squares
   def squares
-    self.files.map do |letter|
-      self.rows.map do |number|
-        Outpost::Square.new(letter: letter, number: number, color: self.cycled_colors.next)
+    self.files.map do |file|
+      self.rows.map do |row|
+        Outpost::Square.new(file: file, row: row, color: self.cycled_colors.next)
       end
     end.flatten.extend Outpost::Squares
   end
