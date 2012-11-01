@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe Outpost::Board::Squares do
+describe Outpost::Squares do
   let(:board) { Outpost::Board.new }
   subject { board.squares }
 

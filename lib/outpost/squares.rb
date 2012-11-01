@@ -1,5 +1,4 @@
-module Outpost::Board::Squares
-
+module Outpost::Squares
   def black
     select{ |square| square.color == :black }
   end
