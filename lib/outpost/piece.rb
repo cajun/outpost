@@ -1,4 +1,5 @@
 module Outpost::Piece
+
   # Return and array of squares that are available for this
   # piece to move.
   #

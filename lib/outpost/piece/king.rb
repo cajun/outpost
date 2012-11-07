@@ -1,3 +1,3 @@
-class Outpost::Piece::King
+class Outpost::Piece::King < OpenStruct
   include Outpost::Piece
 end

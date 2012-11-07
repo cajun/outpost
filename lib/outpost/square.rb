@@ -3,7 +3,7 @@ class Outpost::Square
 
   def initialize opts
     @file  = opts[:file]
-    @rank   = opts[:rank]
+    @rank  = opts[:rank]
     @color = opts[:color]
   end
 

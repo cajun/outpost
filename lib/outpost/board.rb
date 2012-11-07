@@ -12,15 +12,13 @@ class Outpost::Board
 
   # Setting up the board. Loading it with all the
   # squares and pieces.
-  def initialize otps={}
+  def initialize opts={}
     @files   = opts[:files]
     @ranks   = opts[:ranks]
     @colors  = opts[:colors]
     @squares = Outpost::Squares::Create.squares self
-    @pieces  = {
-      black: Outpost::Piece::Create.pieces(self),
-      white: Outpost::Piece::Create.pieces(self)
-    }
+    reset_cycled_colors
+    @pieces  = Outpost::Piece::Create.pieces self
   end
 
 
@@ -55,6 +53,16 @@ class Outpost::Board
   # @returns [Array] # of numeric values
   def colors
     @colors ||= [:black, :white]
+  end
+
+
+  # This helper will give you a way to cycle the colors
+  def cycled_colors
+    @cycled_colors ||= colors.cycle
+  end
+
+  def reset_cycled_colors
+    @cycled_colors = nil
   end
 
 

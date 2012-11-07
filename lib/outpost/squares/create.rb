@@ -6,15 +6,11 @@ module Outpost::Squares::Create
   def squares board
     board.files.map do |file|
       board.ranks.map do |rank|
-        Outpost::Square.new(file: file, rank: rank, color: self.cycled_colors(board).next)
+        Outpost::Square.new(file: file, rank: rank, color: board.cycled_colors.next)
       end
     end.flatten.extend Outpost::Squares
   end
 
-
-  def cycled_colors(board)
-    @cycled_colors ||= board.colors.cycle
-  end
 
 end
 
