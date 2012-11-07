@@ -3,28 +3,17 @@ module Outpost::Squares::Create
   # Method to create the initial squares on the board
   #
   # @returns [[Outpost::Square]] squares
-  def squares
-    self.files.map do |file|
-      self.rows.map do |row|
-        Outpost::Square.new(file: file, row: row, color: self.cycled_colors.next)
+  def squares board
+    board.files.map do |file|
+      board.ranks.map do |rank|
+        Outpost::Square.new(file: file, rank: rank, color: self.cycled_colors(board).next)
       end
     end.flatten.extend Outpost::Squares
   end
 
-  def files
-    'a' .. 'h'
-  end
 
-  def rows
-    1 .. 8
-  end
-
-  def colors
-    [:black, :white]
-  end
-
-  def cycled_colors
-    @cycled_colors ||= colors.cycle
+  def cycled_colors(board)
+    @cycled_colors ||= board.colors.cycle
   end
 
 end

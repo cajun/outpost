@@ -1,13 +1,13 @@
 class Outpost::Square
-  attr_reader :file, :row, :color
+  attr_reader :file, :rank, :color
 
   def initialize opts
     @file  = opts[:file]
-    @row   = opts[:row]
+    @rank   = opts[:rank]
     @color = opts[:color]
   end
 
   def notation
-    @file + @row.to_s
+    @file + @rank.to_s
   end
 end

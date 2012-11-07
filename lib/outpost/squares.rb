@@ -19,8 +19,8 @@ module Outpost::Squares
   # @example
   #   board = Outpost::Board.new
   #   board.squares.find file: 'e'      # => [[Outpost::Square]] that are in file 'e'
-  #   board.squares.find row: '3'       # => [[Outpost::Square]] that are in row '3'
-  #   board.squares.find notation: 'b3' # => [[Outpost::Square]] that are in file 'b' row '3'
+  #   board.squares.find rank: '3'      # => [[Outpost::Square]] that are in rank '3'
+  #   board.squares.find notation: 'b3' # => [[Outpost::Square]] that are in file 'b' rank '3'
   #
   # @returns [[Outpost::Square]] the discovered squares
   def find opts
