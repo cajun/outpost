@@ -1,4 +1,5 @@
 module Outpost::Piece
+  attr_accessor :board, :square
 
   # Return and array of squares that are available for this
   # piece to move.

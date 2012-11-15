@@ -19,6 +19,7 @@ class Outpost::Board
     @squares = Outpost::Squares::Create.squares self
     reset_cycled_colors
     @pieces  = Outpost::Piece::Create.pieces self
+    @pieces.each { |p| p.board = self}
   end
 
 

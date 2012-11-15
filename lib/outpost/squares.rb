@@ -29,4 +29,5 @@ module Outpost::Squares
     end
   end
 
+
 end
