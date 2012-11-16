@@ -4,7 +4,9 @@ require 'spec_helper'
 describe Outpost::Piece::Queen do
   let(:board) { Outpost::Board.new }
   let(:queen) {
-    queen = board.pieces.detect{ |p| Outpost::Piece::Queen === p }
+    board.pieces.delete_if{ |p| !(Outpost::Piece::Queen === p) || p.color == :white }
+    queen = board.pieces.first
+    board.squares.each {|s| s.piece = nil }
     queen.square = board.squares.find(rank: 4, file: 'e').first
     queen
   }

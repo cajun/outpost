@@ -16,6 +16,12 @@ describe Outpost::Board do
   end
 
   describe '#setup_pieces' do
+    it 'has pieces on unique squares' do
+      all    = board.pieces.map(&:square).compact
+      unique = board.pieces.map(&:square).compact.uniq{|x| [x.rank, x.file]}
+      unique.length.should eq all.length
+    end
+
     it 'has all pieces on squares' do
       board.pieces.map(&:square).compact.length.should be 32
     end

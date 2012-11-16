@@ -24,17 +24,79 @@ class Outpost::Board
 
 
   def setup_pieces
-    @pieces.find(color: :white).each_with_index do |p,index|
-      s        = @squares[index]
-      p.square = s
-      s.piece  = p
+    setup_pawns
+
+    setup_rooks files.first, files.last
+    setup_knights files.to_a[1], files.to_a[-2]
+    setup_bishops files.to_a[2], files.to_a[-3]
+
+    setup_queens files.to_a[4]
+    setup_kings  files.to_a[3]
+
+  end
+
+
+  def setup_pawns
+    @pieces.find(color: :white, class: Outpost::Piece::Pawn).each_with_index do |p|
+      @files.each do |file|
+        s        = @squares.find( file: file, rank: ranks.to_a[1] ).first
+        p.square = s
+        s.piece  = p
+      end
     end
 
-    @pieces.find(color: :black).each_with_index do |p,index|
-      s        = @squares.reverse[index]
-      p.square = s
-      s.piece  = p
+    @pieces.find(color: :black, class: Outpost::Piece::Pawn).each_with_index do |p|
+      @files.each do |file|
+        s        = @squares.find( file: file, rank: ranks.to_a[-2] ).first
+        p.square = s
+        s.piece  = p
+      end
     end
+
+  end
+
+  def setup_rooks *files
+    setup_piece Outpost::Piece::Rook, :white, files, ranks.first
+    setup_piece Outpost::Piece::Rook, :black, files, ranks.last
+  end
+
+  def setup_knights *files
+    setup_piece Outpost::Piece::Knight, :white, files, ranks.first
+    setup_piece Outpost::Piece::Knight, :black, files, ranks.last
+  end
+
+  def setup_bishops *files
+    setup_piece Outpost::Piece::Bishop, :white, files, ranks.first
+    setup_piece Outpost::Piece::Bishop, :black, files, ranks.last
+  end
+
+  def setup_kings file
+    setup_single Outpost::Piece::King, :white, file, ranks.first
+    setup_single Outpost::Piece::King, :black, file, ranks.last
+  end
+
+  def setup_queens file
+    setup_single Outpost::Piece::Queen, :white, file, ranks.first
+    setup_single Outpost::Piece::Queen, :black, file, ranks.last
+  end
+
+  def setup_piece klass, color, files, rank
+    left, right  = *@pieces.find(color: color, class: klass)
+
+    square       = @squares.find( file: files.first, rank: rank ).first
+    left.square  = square
+    square.piece = left
+
+    square       = @squares.find( file: files.last, rank: rank ).first
+    right.square  = square
+    square.piece = right
+  end
+
+  def setup_single klass, color, file, rank
+    piece        = @pieces.find(color: color, class: klass).first
+    square       = @squares.find( file: file, rank: rank ).first
+    piece.square = square
+    square.piece = piece
   end
 
 
