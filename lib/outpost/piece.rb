@@ -65,4 +65,25 @@ module Outpost::Piece
     false
   end
 
+  def diagonal limit=nil
+    file_index = board.files.to_a.index square.file
+    rank_index = board.ranks.to_a.index square.rank
+
+    board.squares.select do |square|
+      mod_file = board.files.to_a.index square.file
+      mod_rank = board.ranks.to_a.index square.rank
+
+      (mod_file - file_index).abs == (mod_rank - rank_index).abs
+
+    end.uniq{|s| [s.rank, s.file]}
+
+  end
+
+
+  def horizontal limit=nil
+    (board.squares.find( rank: square.rank ) +
+      board.squares.find( file: square.file )).uniq{|s| [s.rank, s.file]}
+  end
+
+
 end
