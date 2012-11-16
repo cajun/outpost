@@ -12,8 +12,10 @@ class Outpost::Game
 
 
   def move piece, square
-    piece.square.piece = nil
-    piece.square, square.piece = square, piece
+    if piece.possible_moves.include? square
+      piece.square.piece = nil
+      piece.square, square.piece = square, piece
+    end
   end
 
 end

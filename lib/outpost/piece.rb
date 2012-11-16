@@ -69,7 +69,14 @@ module Outpost::Piece
     file_index = board.files.to_a.index square.file
     rank_index = board.ranks.to_a.index square.rank
 
-    board.squares.find(piece: null).select do |square|
+    board.squares.find(piece: nil).select do |square|
+      mod_file = board.files.to_a.index square.file
+      mod_rank = board.ranks.to_a.index square.rank
+
+      (mod_file - file_index).abs == (mod_rank - rank_index).abs
+
+    end +
+    board.squares.find(piece_color: other_color).select do |square|
       mod_file = board.files.to_a.index square.file
       mod_rank = board.ranks.to_a.index square.rank
 
@@ -81,8 +88,14 @@ module Outpost::Piece
 
 
   def horizontal limit=nil
-    (board.squares.find( piece: null, rank: square.rank ) +
-      board.squares.find( piece: null, file: square.file )).uniq{|s| [s.rank, s.file]}
+    (board.squares.find( piece_color: other_color, rank: square.rank ) +
+      board.squares.find( piece_color: other_color, file: square.file )).uniq{|s| [s.rank, s.file]} +
+    (board.squares.find( piece: nil, rank: square.rank ) +
+      board.squares.find( piece: nil, file: square.file )).uniq{|s| [s.rank, s.file]}
+  end
+
+  def other_color
+    (board.colors - [self.color]).first
   end
 
 

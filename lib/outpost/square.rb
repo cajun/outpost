@@ -11,4 +11,8 @@ class Outpost::Square
   def notation
     @file + @rank.to_s
   end
+
+  def piece_color
+    piece.color if piece
+  end
 end
