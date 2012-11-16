@@ -13,6 +13,7 @@ require "outpost/piece/knight"
 require "outpost/piece/rook"
 require "outpost/piece/queen"
 require "outpost/piece/king"
+require "outpost/game"
 
 module Outpost
   # Your code goes here...
