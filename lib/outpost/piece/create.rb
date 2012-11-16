@@ -1,34 +1,40 @@
 module Outpost::Piece::Create
   module_function
 
-  def pieces board =nil
+  def pieces board
     board.colors.map do |color|
-      pawns(color) + knights(color) + bishops(color) + rooks(color) + queen(color) + king(color)
+      pawns(board, color) +
+        knights(board, color) +
+        bishops(board, color) +
+        rooks(board, color) +
+        queen(board, color) +
+        king(board, color)
     end.flatten.extend Outpost::Pieces
   end
 
 
-  def pawns color
-    (1..8).map { Outpost::Piece::Pawn.new color: color   }
+  def pawns board, color
+    (1..8).map { Outpost::Piece::Pawn.new board: board, color: color   }
   end
 
-  def knights color
-    (1..2).map { Outpost::Piece::Knight.new color: color }
+  def knights board, color
+    (1..2).map { Outpost::Piece::Knight.new board: board, color: color }
   end
 
-  def bishops color
-    (1..2).map { Outpost::Piece::Bishop.new color: color }
+  def bishops board, color
+    (1..2).map { Outpost::Piece::Bishop.new board: board, color: color }
   end
 
-  def rooks color
-    (1..2).map { Outpost::Piece::Rook.new color: color   }
+  def rooks board, color
+    (1..2).map { Outpost::Piece::Rook.new board: board, color: color   }
   end
 
-  def queen color
-    [ Outpost::Piece::Queen.new(color: color) ]
+  def queen board, color
+    [ Outpost::Piece::Queen.new(board: board, color: color) ]
   end
 
-  def king color
-    [ Outpost::Piece::King.new(color: color) ]
+  def king board, color
+    [ Outpost::Piece::King.new(board: board, color: color) ]
   end
+
 end

@@ -46,51 +46,30 @@ describe Outpost::Pieces do
 
   describe 'black' do
     it_behaves_like 'players pieces' do
-      let(:pieces) {board.pieces.find(:black)}
+      let(:pieces) {board.pieces.find(color: :black)}
     end
   end
 
   describe 'white' do
     it_behaves_like 'players pieces' do
-      let(:pieces) {board.pieces.find(:white)}
+      let(:pieces) {board.pieces.find(color: :white)}
     end
   end
 
   describe '#find' do
-    subject {board}
+    subject {board.pieces}
 
     it { should respond_to :find }
-    context 'when finding file: "a"' do
-      subject { board.pieces.find file: 'a' }
-      it { should have(8).items }
-      it { subject.map(&:file).uniq.should eq ['a'] }
-    end
-
-    context 'when finding rank: 4' do
-      subject { board.pieces.find rank: 4 }
-      it { should have(8).items }
-      it { subject.map(&:rank).uniq.should eq [4] }
-    end
-
-    context 'when finding file: "b", rank: 2' do
-      subject { board.pieces.find file: 'b', rank: 2 }
-      it { should have(1).item }
-      it { subject.first.file.should eq 'b' }
-      it { subject.first.rank.should eq 2 }
-    end
-
-    context 'when finding notation: "e8"' do
-      subject { board.pieces.find notation: 'e8' }
-      it { should have(1).item }
-      it { subject.first.file.should eq 'e' }
-      it { subject.first.rank.should eq 8 }
-    end
-
     context 'when finding color: :white' do
       subject { board.pieces.find color: :white }
-      it { should have(32).items }
+      it { should have(16).items }
       it { subject.map(&:color).uniq.should eq [:white] }
+    end
 
+    context 'when finding color: :black' do
+      subject { board.pieces.find color: :black }
+      it { should have(16).items }
+      it { subject.map(&:color).uniq.should eq [:black] }
     end
   end
 

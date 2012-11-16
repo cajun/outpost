@@ -1,5 +1,17 @@
 module Outpost::Piece
-  attr_accessor :board, :square
+  attr_accessor :square
+
+  def notation
+    file + rank.to_s
+  end
+
+  def file
+    square.file
+  end
+
+  def rank
+    square.rank
+  end
 
   # Return and array of squares that are available for this
   # piece to move.

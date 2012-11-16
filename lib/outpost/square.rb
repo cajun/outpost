@@ -1,5 +1,6 @@
 class Outpost::Square
   attr_reader :file, :rank, :color
+  attr_accessor :piece
 
   def initialize opts
     @file  = opts[:file]
