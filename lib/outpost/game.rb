@@ -12,6 +12,7 @@ class Outpost::Game
 
 
   def move piece, square
+    piece.square.piece = nil
     piece.square, square.piece = square, piece
   end
 
