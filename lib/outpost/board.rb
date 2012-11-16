@@ -24,8 +24,14 @@ class Outpost::Board
 
 
   def setup_pieces
-    @pieces.each do |p|
+    @pieces.find(color: :white).each do |p|
       s        = @squares[@pieces.index(p)]
+      p.square = s
+      s.piece  = p
+    end
+
+    @pieces.find(color: :black).each do |p|
+      s        = @squares.reverse[@pieces.index(p)]
       p.square = s
       s.piece  = p
     end
