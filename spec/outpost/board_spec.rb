@@ -16,19 +16,51 @@ describe Outpost::Board do
   end
 
   describe '#setup_pieces' do
+    let(:taken_squares){ board.pieces.map(&:square).compact }
+    let(:unique_squares){ taken_squares.uniq{ |x| [x.rank, x.file] } }
+
     it 'has pieces on unique squares' do
-      all    = board.pieces.map(&:square).compact
-      unique = board.pieces.map(&:square).compact.uniq{|x| [x.rank, x.file]}
-      unique.length.should eq all.length
+      unique_squares.length.should eq taken_squares.length
     end
 
     it 'has all pieces on squares' do
-      board.pieces.map(&:square).compact.length.should be 32
+      taken_squares.length.should be 32
     end
 
     it 'squares have 32 pieces' do
       board.squares.map(&:piece).compact.length.should be 32
     end
+
+  end
+
+  describe 'standard_layout' do
+    context 'pawns' do
+
+      ('a' .. 'h').each do |file|
+        context "white on #{file}2" do
+          subject {board.pieces.find(color: :white, file: file, rank: 2 )}
+
+          its(:length) { should eq 1 }
+          its('first.class') { should eq Outpost::Piece::Pawn }
+          its('first.color') { should eq :white }
+          its('first.file') { should eq file }
+          its('first.rank') { should eq 2 }
+        end
+
+        context "black on #{file}7" do
+          subject {board.pieces.find(color: :black, file: file, rank: 7 )}
+
+          its(:length) { should eq 1 }
+          its('first.class') { should eq Outpost::Piece::Pawn }
+          its('first.color') { should eq :black }
+          its('first.file') { should eq file }
+          its('first.rank') { should eq 7 }
+        end
+
+      end
+    end
+
+
   end
 
 end

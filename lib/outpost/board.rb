@@ -37,20 +37,20 @@ class Outpost::Board
 
 
   def setup_pawns
-    @pieces.find(color: :white, class: Outpost::Piece::Pawn).each_with_index do |p|
-      @files.each do |file|
-        s        = @squares.find( file: file, rank: ranks.to_a[1] ).first
-        p.square = s
-        s.piece  = p
-      end
+    pawns = @pieces.find(color: :white, class: Outpost::Piece::Pawn)
+    @files.each_with_index do |file,index|
+      p        = pawns[index]
+      s        = @squares.find( file: file, rank: ranks.to_a[1] ).first
+      p.square = s
+      s.piece  = p
     end
 
-    @pieces.find(color: :black, class: Outpost::Piece::Pawn).each_with_index do |p|
-      @files.each do |file|
-        s        = @squares.find( file: file, rank: ranks.to_a[-2] ).first
-        p.square = s
-        s.piece  = p
-      end
+    pawns = @pieces.find(color: :black, class: Outpost::Piece::Pawn)
+    @files.each_with_index do |file,index|
+      p        = pawns[index]
+      s        = @squares.find( file: file, rank: ranks.to_a[-2] ).first
+      p.square = s
+      s.piece  = p
     end
 
   end

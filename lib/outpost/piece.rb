@@ -65,7 +65,11 @@ module Outpost::Piece
     false
   end
 
+
+  # List out squares on the board that are in a diagonal to the
+  # square that this piece is on
   def diagonal limit=nil
+
     file_index = board.files.to_a.index square.file
     rank_index = board.ranks.to_a.index square.rank
 
@@ -73,9 +77,14 @@ module Outpost::Piece
       mod_file = board.files.to_a.index square.file
       mod_rank = board.ranks.to_a.index square.rank
 
-      (mod_file - file_index).abs == (mod_rank - rank_index).abs
+      file_diff = (mod_file - file_index).abs
+      rank_diff = (mod_rank - rank_index).abs
 
+      file_diff == rank_diff &&
+        file_diff <= limit
+        rank_diff <= limit
     end +
+
     board.squares.find(piece_color: other_color).select do |square|
       mod_file = board.files.to_a.index square.file
       mod_rank = board.ranks.to_a.index square.rank
