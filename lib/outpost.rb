@@ -1,4 +1,5 @@
 require 'ostruct'
+require 'singleton'
 require "outpost/version"
 require "outpost/board"
 require "outpost/square"
@@ -14,6 +15,7 @@ require "outpost/piece/rook"
 require "outpost/piece/queen"
 require "outpost/piece/king"
 require "outpost/game"
+require "outpost/config"
 
 module Outpost
   # Your code goes here...

@@ -6,16 +6,17 @@
 # @author Zac Kleinpeter
 class Outpost::Board
   attr_reader :squares, :pieces
+  extend Forwardable
+
+  def_delegators :@config, :files, :ranks, :colors
 
   TYPE = [:standard, :'960']
 
 
   # Setting up the board. Loading it with all the
   # squares and pieces.
-  def initialize opts={}
-    @files   = opts[:files]
-    @ranks   = opts[:ranks]
-    @colors  = opts[:colors]
+  def initialize
+    @config = Outpost::Config.setup
     @squares = Outpost::Squares::Create.squares self
     reset_cycled_colors
     @pieces  = Outpost::Piece::Create.pieces self
@@ -37,20 +38,17 @@ class Outpost::Board
 
 
   def setup_pawns
-    pawns = @pieces.find(color: :white, class: Outpost::Piece::Pawn)
-    @files.each_with_index do |file,index|
-      p        = pawns[index]
-      s        = @squares.find( file: file, rank: ranks.to_a[1] ).first
-      p.square = s
-      s.piece  = p
-    end
+    [{rank: ranks.to_a[1], color: :white},
+     {rank: ranks.to_a[-2], color: :black}].each do |tuple|
 
-    pawns = @pieces.find(color: :black, class: Outpost::Piece::Pawn)
-    @files.each_with_index do |file,index|
-      p        = pawns[index]
-      s        = @squares.find( file: file, rank: ranks.to_a[-2] ).first
-      p.square = s
-      s.piece  = p
+      pawns = @pieces.find(color: tuple[:color], class: Outpost::Piece::Pawn)
+      files.each_with_index do |file,index|
+        p        = pawns[index]
+        s        = @squares.find( file: file, rank: tuple[:rank] ).first
+        p.square = s
+        s.piece  = p
+      end
+
     end
 
   end
@@ -107,7 +105,7 @@ class Outpost::Board
   #
   # @returns [Range] # of alpha characters
   def files
-    @files ||= 'a' .. 'h'
+    Outpost::Config.instance.files
   end
 
 
@@ -118,7 +116,7 @@ class Outpost::Board
   #
   # @returns [Range] # of numeric values
   def ranks
-    @ranks ||= 1 .. 8
+    Outpost::Config.instance.ranks
   end
 
 
@@ -130,7 +128,7 @@ class Outpost::Board
   #
   # @returns [Array] # of numeric values
   def colors
-    @colors ||= [:black, :white]
+    Outpost::Config.instance.colors
   end
 
 

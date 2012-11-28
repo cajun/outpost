@@ -68,35 +68,28 @@ module Outpost::Piece
 
   # List out squares on the board that are in a diagonal to the
   # square that this piece is on
-  def diagonal limit=nil
+  def diagonal limit=100
 
     file_index = board.files.to_a.index square.file
     rank_index = board.ranks.to_a.index square.rank
 
-    board.squares.find(piece: nil).select do |square|
-      mod_file = board.files.to_a.index square.file
-      mod_rank = board.ranks.to_a.index square.rank
+    [ {piece: nil}, {piece_color: other_color} ].map do |opts|
+      board.squares.find(opts).select do |square|
+        mod_file = board.files.to_a.index square.file
+        mod_rank = board.ranks.to_a.index square.rank
 
-      file_diff = (mod_file - file_index).abs
-      rank_diff = (mod_rank - rank_index).abs
+        file_diff = (mod_file - file_index).abs
+        rank_diff = (mod_rank - rank_index).abs
 
-      file_diff == rank_diff &&
-        file_diff <= limit
-        rank_diff <= limit
-    end +
-
-    board.squares.find(piece_color: other_color).select do |square|
-      mod_file = board.files.to_a.index square.file
-      mod_rank = board.ranks.to_a.index square.rank
-
-      (mod_file - file_index).abs == (mod_rank - rank_index).abs
-
-    end.uniq{|s| [s.rank, s.file]}
+        file_diff == rank_diff &&
+          (file_diff <= limit && rank_diff <= limit)
+      end
+    end.flatten.uniq{ |s| [s.rank, s.file] }
 
   end
 
 
-  def horizontal limit=nil
+  def horizontal limit=100
     (board.squares.find( piece_color: other_color, rank: square.rank ) +
       board.squares.find( piece_color: other_color, file: square.file )).uniq{|s| [s.rank, s.file]} +
     (board.squares.find( piece: nil, rank: square.rank ) +
